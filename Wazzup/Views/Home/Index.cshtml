@@ -1,0 +1,103 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Wazzup</h1>
+
+    <div id="connection">
+        <p>Mesajlaşmak için nick girin:</p>
+        <input type="text" id="txtNickname" class="form-text" placeholder="Nick" />
+        <a href="javascript:;" id="btnConnect" class="btn-primary">Bağlan</a>
+    </div>
+    <div id="chat" style="display:none">
+        <input type="text" id="txtMessage" class="form-text" placeholder="Mesaj" />
+        <a href="javascript:;" id="btnSend" class="btn-primary">Gönder</a>
+        <h3>Mesajlar</h3>
+        <div id="message-container">
+        </div>
+
+    </div>
+</div>
+
+@section Scripts{
+    <script type="text/javascript">
+        let socket;
+
+        function pickNickname() {
+            var nickname = $("#txtNickname").val();
+            if (nickname == null || nickname == "" || nickname.length == 0) {
+                alert("Lütfen nick girin!");
+                return false;
+            }
+
+            if (nickname.length < 3) {
+                alert("Nick'iniz 3 karakterden az olamaz.");
+                return false;
+            }
+
+            $.ajax({
+                type: "POST",
+                url: "https://localhost:44308/user/add",
+                dataType: "json",
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify({
+                    Nickname: nickname
+                }),
+                success: function (response) {
+                    connect(response);
+                },
+                error: function (response) {
+                    if (response.status == 401) {
+                        alert("Lütfen başka bir nick seçiniz.");
+                        return true;
+                    }
+                }
+            });
+        }
+
+        function connect(id) {
+            socket = new WebSocket("wss://localhost:44308/message?uid=" + id);
+            socket.onopen = function (e) {
+                $("#connection").hide();
+                $("#chat").show();
+            };
+            socket.onclose = function (e) {
+                $("#connection").show();
+                $("#chat").hide();
+                $("message-container").empty();
+                //alert("Bağlantınız koptu!");
+            };
+            socket.onerror = function (e) {
+                console.error(e.data);
+                alert("Opps.. Bir şeyler ters gitti.");
+            };
+            socket.onmessage = function (e) {
+                console.log(e.data);
+                var newMessage = "<p>" + e.data + "</p>";
+                $("#message-container").append(newMessage);
+            };
+        }
+
+        function sendMessage() {
+            var message = $("#txtMessage").val();
+            if (message == "" && message == null) {
+                alert("Message can't be empty!");
+                return false;
+            }
+            else {
+                socket.send(message);
+                console.log('Message sent. Message: ' + message);
+                return true;
+            }
+        }
+
+        $(document).ready(function () {
+            var btnConnect = $("#btnConnect");
+            var btnSend = $("#btnSend");
+
+            btnConnect.on("click", pickNickname);
+            btnSend.on("click", sendMessage);
+        });
+    </script>
+}
