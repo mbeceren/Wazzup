@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wazzup.Web", "Wazzup.Web\Wa
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wazzup.Messaging", "Wazzup.Messaging\Wazzup.Messaging.csproj", "{BC758629-D8F0-4F3C-8AC3-08BF01E35D61}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wazzup.Identity", "Wazzup.User\Wazzup.Identity.csproj", "{5AD9E54A-3B44-44DA-B0DA-52408C47EF3A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wazzup.Identity", "Wazzup.Identity\Wazzup.Identity.csproj", "{5AD9E54A-3B44-44DA-B0DA-52408C47EF3A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wazzup.Common", "Wazzup.Common\Wazzup.Common.csproj", "{C617A479-C6AE-401C-A00B-750C8CADEA58}"
 EndProject

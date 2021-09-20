@@ -16,9 +16,25 @@
         <h3>Mesajlar</h3>
         <div id="message-container">
         </div>
-
     </div>
 </div>
+
+<template>
+    <label class="sender"></label>
+    <label class="topright"></label>
+    <p class="message"></p>
+</template>
+
+@section Styles{
+    <style type="text/css">
+        .topright {
+            position: absolute;
+            top: 8px;
+            right: 16px;
+            font-size: 18px;
+        }
+    </style>
+}
 
 @section Scripts{
     <script type="text/javascript">
@@ -66,7 +82,6 @@
                 $("#connection").show();
                 $("#chat").hide();
                 $("message-container").empty();
-                //alert("Bağlantınız koptu!");
             };
             socket.onerror = function (e) {
                 console.error(e.data);
@@ -74,8 +89,7 @@
             };
             socket.onmessage = function (e) {
                 console.log(e.data);
-                var newMessage = "<p>" + e.data + "</p>";
-                $("#message-container").append(newMessage);
+                displayNewMessage(JSON.parse(e.data));
             };
         }
 
@@ -90,6 +104,21 @@
                 console.log('Message sent. Message: ' + message);
                 return true;
             }
+        }
+
+        function displayNewMessage(data) {
+            var defaultTemplate = document.getElementsByTagName("template")[0];
+            var template = defaultTemplate.content.cloneNode(true);
+            var _sender = $(template).find(".sender");
+            var _message = $(template).find(".message");
+            var _date = $(template).find(".topright");
+
+            _sender.text(data.Sender.Nickname);
+            _sender.css("color", "rgb(" + data.Sender.Color.R + ", " + data.Sender.Color.G + ", " + data.Sender.Color.B + ")");
+            _message.text(data.Text);
+            _date.text(data.Time);
+
+            $("#message-container").append(template);
         }
 
         $(document).ready(function () {

@@ -9,8 +9,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Wazzup.Identity\Wazzup.Identity.csproj" />
     <ProjectReference Include="..\Wazzup.Messaging\Wazzup.Messaging.csproj" />
-    <ProjectReference Include="..\Wazzup.User\Wazzup.Identity.csproj" />
   </ItemGroup>
 
 </Project>

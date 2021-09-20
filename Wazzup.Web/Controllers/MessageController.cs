@@ -62,7 +62,6 @@ namespace Wazzup.Web.Controllers
 						Color = user.Color,
 						Nickname = user.Nickname
 					},
-					Date = DateTime.Now,
 					Text = StringHelper.StripHTML(receivedMessage)
 				};
 
