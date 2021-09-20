@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30717.126
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wazzup.Web", "Wazzup\Wazzup.Web.csproj", "{128AF046-17DF-4078-9092-804BD325C446}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wazzup.Web", "Wazzup.Web\Wazzup.Web.csproj", "{128AF046-17DF-4078-9092-804BD325C446}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wazzup.Messaging", "Wazzup.Messaging\Wazzup.Messaging.csproj", "{BC758629-D8F0-4F3C-8AC3-08BF01E35D61}"
 EndProject
