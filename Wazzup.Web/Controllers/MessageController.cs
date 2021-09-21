@@ -1,12 +1,13 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Linq;
 using System.Net.WebSockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Wazzup.Common;
 using Wazzup.Identity;
-using Wazzup.Identity.Exceptions;
 using Wazzup.Identity.Models;
 using Wazzup.Messaging;
 using Wazzup.Messaging.Exceptions;
@@ -35,6 +36,7 @@ namespace Wazzup.Web.Controllers
 				try
 				{
 					_socketPool.AddSocket(user.Id, webSocket);
+					await PublishChatList();
 					await HandleSocket(user, webSocket);
 				}
 				catch(SocketException ex)
@@ -74,6 +76,24 @@ namespace Wazzup.Web.Controllers
 			await webSocket.CloseAsync(result.CloseStatus.Value, result.CloseStatusDescription, CancellationToken.None);
 			_socketPool.RemoveSocket(user.Id);
 			_userPool.RemoveUser(user.Id);
+			await PublishChatList();
+		}
+
+		private async Task PublishChatList()
+		{
+			var chat = new Chat();
+			foreach(var user in _userPool.GetAllUsers())
+			{
+				var chatUser = new ChatUser()
+				{
+					Color = user.Color,
+					NickName = user.Nickname
+				};
+				chat.ChatUsers.Add(chatUser);
+			}
+
+			var chatData = Encoding.UTF8.GetBytes(chat.SerializeToJson());
+			await _socketPoolManager.Publish(chatData);
 		}
 	}
 }

@@ -37,6 +37,11 @@ namespace Wazzup.Identity
 				_users.Remove(userToRemove);
 		}
 
+		public IEnumerable<User> GetAllUsers()
+		{
+			return _users;
+		}
+
 		private Color GenerateColor()
 		{
 			Random rnd = new Random();

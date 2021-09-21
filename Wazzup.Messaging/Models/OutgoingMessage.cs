@@ -6,6 +6,6 @@ namespace Wazzup.Messaging.Models
 	{
 		private readonly DateTime _date = DateTime.Now;
 		public Sender Sender { get; set; }
-		public string Time => _date.ToShortTimeString();
+		public string Time => _date.ToLongTimeString();
 	}
 }

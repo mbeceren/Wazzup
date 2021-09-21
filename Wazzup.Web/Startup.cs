@@ -22,7 +22,7 @@ namespace Wazzup
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
-			services.AddControllersWithViews();
+			services.AddControllersWithViews().AddRazorRuntimeCompilation();
 			services.AddSingleton<ISocketPool, SocketPool>(s => {
 				var poolSize = Configuration.GetSection("SocketSettings:SocketPoolSize").Get<int>();
 				return new SocketPool(poolSize);
@@ -31,6 +31,7 @@ namespace Wazzup
 				return new SocketPoolManager(s.GetRequiredService<ISocketPool>());
 			});
 			services.AddSingleton<IUserPool, UserPool>();
+			
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
