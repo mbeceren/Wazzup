@@ -120,7 +120,7 @@
 
             $.ajax({
                 type: "POST",
-                url: "https://localhost:44308/user/add",
+                url: "http://int.wazzup.com/user/add",
                 dataType: "json",
                 contentType: 'application/json; charset=utf-8',
                 data: JSON.stringify({
@@ -139,7 +139,7 @@
         }
 
         function connect(id) {
-            socket = new WebSocket("wss://localhost:44308/message?uid=" + id);
+            socket = new WebSocket("ws://int.wazzup.com/message?uid=" + id);
             socket.onopen = function (e) {
                 $("#connection").hide();
                 $("#chat").show();

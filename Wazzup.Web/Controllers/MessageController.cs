@@ -43,6 +43,7 @@ namespace Wazzup.Web.Controllers
 				{
 					HttpContext.Response.StatusCode = ex.StatusCode;
 					_userPool.RemoveUser(uid);
+					await PublishChatList();
 				}
 			}
 		}
